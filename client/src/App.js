@@ -4,6 +4,8 @@ import Landing from './pages/Landing/Landing';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import ToDoList from './pages/ToDo/ToDoList';
+import './App.css'
+import 'antd/dist/reset.css'
 
 function App() {
   return (
