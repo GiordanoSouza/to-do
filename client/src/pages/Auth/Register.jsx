@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import styles from './Login.module.css'
 import login from '../../assets/login.png'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom'
+import { getErrorMessage } from '../../util/GetError'
 import {Button, Input} from 'antd'
 
 
@@ -10,14 +11,31 @@ function Register() {
     const [password,setPassword] = useState('');
     const [FirstName,setFirstName] = useState('');
     const [LastName,setLastName] = useState('');
-    const handleSubmit = () => {
+    const [loading,setLoading] = useState(false);
+    const navigate = useNavigate();
+    const handleSubmit = async () => {
+        try{
+            setLoading(true);
+            const data = {
+                FirstName,
+                LastName,
+                username,
+                password
+            }
+            const response = await AuthServices.registerUser(data);
+            setLoading(false);
+            message.success('Ligma Successfully Registered');
+        }catch(err){
+            console.log(err)
+            message.error(getErrorMessage(err));   
+        }
         console.log("register")
     }
   return (
     <div>
         <div className={styles.login__card}>
             <img src={login} alt="" />
-            <h4>Register</h4>
+            <h2>Register</h2>
             <div className={styles.input__inline__wrapper}>
                 <Input 
                 placeholder="First Name" 
@@ -42,9 +60,9 @@ function Register() {
                 onChange={(e) => setPassword(e.target.value)} />
             </div>
             <div class name={styles.input__info}style={{ marginBottom: "10px"}} >
-                Existing User? <Link to="/register">Login</Link>
+                Existing User? <Link to="/login">Login</Link>
             </div>
-            <Button type = "primary" size="large" disabled={!username || !password} onClick={handleSubmit}>Register</Button>
+            <Button loading={loading} type = "primary" size="large" disabled={!username || !password} onClick={handleSubmit}>Register</Button>
         </div>
     </div>
   )
