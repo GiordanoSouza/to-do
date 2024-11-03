@@ -3,28 +3,31 @@ import styles from './Login.module.css'
 import login from '../../assets/login.png'
 import { Link , useNavigate } from 'react-router-dom'
 import { getErrorMessage } from '../../util/GetError'
-import {Button, Input} from 'antd'
+import AuthServices from '../../services/authServices'
+import {Button, Input, message} from 'antd'
 
 
 function Register() {
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
-    const [FirstName,setFirstName] = useState('');
-    const [LastName,setLastName] = useState('');
+    const [firstName,setFirstName] = useState('');
+    const [lastName,setLastName] = useState('');
     const [loading,setLoading] = useState(false);
     const navigate = useNavigate();
     const handleSubmit = async () => {
         try{
             setLoading(true);
             const data = {
-                FirstName,
-                LastName,
+                firstName,
+                lastName,
                 username,
                 password
             }
             const response = await AuthServices.registerUser(data);
+            console.log(response.data);
             setLoading(false);
             message.success('Ligma Successfully Registered');
+            navigate('/login');
         }catch(err){
             console.log(err)
             message.error(getErrorMessage(err));   
@@ -39,12 +42,12 @@ function Register() {
             <div className={styles.input__inline__wrapper}>
                 <Input 
                 placeholder="First Name" 
-                value={FirstName} 
+                value={firstName} 
                 onChange={(e) => setFirstName(e.target.value)} />
                 <Input 
                 placeholder="Last Name" 
                 style={{marginLeft: "10px"}}
-                value={LastName} 
+                value={lastName} 
                 onChange={(e) => setLastName(e.target.value)} />
             </div>
             <div className={styles.input__wrapper}>
