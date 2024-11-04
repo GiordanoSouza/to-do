@@ -1,8 +1,9 @@
 import React from 'react'
+import Navbar from '../../components/Navbar'
 
 function ToDoList() {
   return (
-    <div>ToDoList</div>
+    <Navbar active={"my task"}/>
   )
 }
 
