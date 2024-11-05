@@ -3,7 +3,7 @@ import Navbar from '../../components/Navbar'
 
 function ToDoList() {
   return (
-    <Navbar active={"my task"}/>
+    <Navbar active={"myTask"}/>
   )
 }
 
